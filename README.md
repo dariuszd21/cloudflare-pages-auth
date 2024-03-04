@@ -9,7 +9,7 @@ Static site that is password-protected when deployed to Cloudflare Pages. This i
 If you want to password-protect your own Cloudflare Pages site, you'll need to:
 
 1. Copy the contents of the `functions` directory from this repo into your own project.
-2. Add a `CFP_PASSWORD` environment variable to your Cloudflare Pages dashboard with the password you want to use.
+2. Add a `CFP_HASHED_PASSWORD` environment variable to your Cloudflare Pages dashboard with the sha256 hashed password you want to use.
 
 The next time you deploy your site, it will be password-protected! 🎉
 
@@ -21,13 +21,13 @@ Since this is a SvelteKit project, first run the build command to generate the s
 npm run build
 ```
 
-Then, you'll need to use the [wrangler](https://github.com/cloudflare/wrangler2) CLI to run the site (with functions) locally:
+Then, you'll need to use the [wrangler](https://github.com/cloudflare/wrangler2) CLI to run the site (with functions) locally (for password 'test'):
 
 ```bash
-npx wrangler pages dev build -b CFP_PASSWORD=test
+npx wrangler pages dev build -b CFP_HASHED_PASSWORD=9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08
 ```
 
-Notice that you'll need to pass the `CFP_PASSWORD` environment variable when running the CLI command. If you don't pass it, the site will not be password-protected.
+Notice that you'll need to pass the `CFP_HASHED_PASSWORD` environment variable when running the CLI command. If you don't pass it, the site will not be password-protected.
 
 ## 💅 Customization
 

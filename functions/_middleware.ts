@@ -5,18 +5,18 @@ import { getTemplate } from './template';
 export async function onRequest(context: {
   request: Request;
   next: () => Promise<Response>;
-  env: { CFP_PASSWORD?: string };
+  env: { CFP_HASHED_PASSWORD?: string };
 }): Promise<Response> {
   const { request, next, env } = context;
   const { pathname, searchParams } = new URL(request.url);
   const { error } = Object.fromEntries(searchParams);
   const cookie = request.headers.get('cookie') || '';
-  const cookieKeyValue = await getCookieKeyValue(env.CFP_PASSWORD);
+  const cookieKeyValue = await getCookieKeyValue(env.CFP_HASHED_PASSWORD);
 
   if (
     cookie.includes(cookieKeyValue) ||
     CFP_ALLOWED_PATHS.includes(pathname) ||
-    !env.CFP_PASSWORD
+    !env.CFP_HASHED_PASSWORD
   ) {
     // Correct hash in cookie, allowed path, or no password set.
     // Continue to next middleware.
